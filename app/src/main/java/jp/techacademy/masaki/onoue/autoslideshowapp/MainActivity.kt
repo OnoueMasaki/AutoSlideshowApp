@@ -44,9 +44,10 @@ class MainActivity : AppCompatActivity() {
                 getContentsInfo()
             } else {
                 // 許可されていないので許可ダイアログを表示する
+                // 画面の無効化設定
+                window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSIONS_REQUEST_CODE)
 
-                window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
         // Android5.0系以下の場合
         } else {
@@ -163,6 +164,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getContentsInfo() {
+        // 無効化を解除
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         // 画像の情報を取得する
         val resolver = contentResolver
         this.cursor = resolver.query(
